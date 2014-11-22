@@ -1,6 +1,6 @@
 Name:           vokoscreen
 Version:        2.1.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
@@ -13,10 +13,10 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  alsa-lib-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  libqxt-devel
+BuildRequires:  libv4l-devel
 BuildRequires:  opencv-devel
 BuildRequires:  qt4-devel
 BuildRequires:  qtsingleapplication-devel
-BuildRequires:  libv4l
 Requires:       alsa-utils
 Requires:       mkvtoolnix
 Requires:       pulseaudio-utils
@@ -63,6 +63,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Sat Nov 22 2014 Martin Gansser <martinkg@fedoraproject.org> - 2.1.0-3
+- added BR libv4l-devel
+- delete BR libv4l
+
 * Sat Nov 22 2014 Martin Gansser <martinkg@fedoraproject.org> - 2.1.0-2
 - added BR libv4l
 
