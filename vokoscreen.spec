@@ -1,5 +1,5 @@
 Name:           vokoscreen
-Version:        2.3.0
+Version:        2.4.0
 Release:        1%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
@@ -64,6 +64,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Mon Jul 20 2015 Martin Gansser <martinkg@fedoraproject.org> - 2.4.0-1
+- Update to 2.4.0
+
 * Tue May 19 2015 Martin Gansser <martinkg@fedoraproject.org> - 2.3.0-1
 - Update to 2.3.0
 
