@@ -1,17 +1,16 @@
---- main.orig.cpp	2014-03-19 08:46:47.000000000 +0100
-+++ main.cpp	2014-09-20 11:51:16.903702078 +0200
-@@ -17,7 +17,7 @@
+--- main.cpp.orig	2016-08-16 20:41:18.050985770 +0200
++++ main.cpp	2016-08-16 20:46:58.893225126 +0200
+@@ -17,6 +17,7 @@
+  */
  
  #include "screencast.h"
- //#include <QSplashScreen>
--#include <QtSingleApplication/qtsingleapplication.h>
 +#include <qtsingleapplication.h>
  #include <QDebug>
  #include <QTranslator>
  #include <QLocale>
 
---- QtSingleApplication/qtsingleapplication.orig.pri	2014-03-19 08:46:47.000000000 +0100
-+++ QtSingleApplication/qtsingleapplication.pri	2014-09-20 12:19:44.953276406 +0200
+--- QtSingleApplicationQt4/qtsingleapplication.pri.orig	2016-08-16 20:50:34.162031809 +0200
++++ QtSingleApplicationQt4/qtsingleapplication.pri	2016-08-16 20:53:12.728134550 +0200
 @@ -1,4 +1,4 @@
 -INCLUDEPATH += $$PWD
 +INCLUDEPATH += /usr/include
@@ -27,16 +26,15 @@
  }
  
  win32 {
-
---- libqxt/libqxt.orig.pri	2014-03-19 08:46:47.000000000 +0100
-+++ libqxt/libqxt.pri	2014-09-20 12:08:57.727640675 +0200
+--- libqxtQt4/libqxt.pri.orig	2016-08-16 20:54:37.131153792 +0200
++++ libqxtQt4/libqxt.pri	2016-08-16 20:56:08.420837342 +0200
 @@ -1,6 +1,6 @@
   
 -INCLUDEPATH	+= $$PWD
-+INCLUDEPATH	+= /usr/include
++INCLUDEPATH     += /usr/include
  DEPENDPATH      += $$PWD
 -HEADERS		+= $$PWD/qxtglobal.h $$PWD/qxtwindowsystem.h $$PWD/qxtglobalshortcut.h $$PWD/qxtglobalshortcut_p.h 
-+HEADERS		+= $$INCLUDEPATH/QxtCore/qxtglobal.h $$INCLUDEPATH/QxtGui/qxtwindowsystem.h $$INCLUDEPATH/QxtGui/qxtglobalshortcut.h $$INCLUDEPATH/QxtGui/qxtglobalshortcut_p.h 
++HEADERS         += $$INCLUDEPATH/QxtCore/qxtglobal.h $$INCLUDEPATH/QxtGui/qxtwindowsystem.h $$INCLUDEPATH/QxtGui/qxtglobalshortcut.h $$INCLUDEPATH/QxtGui/qxtglobalshortcut_p.h
  SOURCES		+= $$PWD/qxtglobal.cpp $$PWD/qxtwindowsystem_x11.cpp $$PWD/qxtglobalshortcut_x11.cpp $$PWD/qxtglobalshortcut.cpp
 -LIBS += -lX11
 \ No newline at end of file

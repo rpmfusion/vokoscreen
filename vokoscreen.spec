@@ -1,6 +1,6 @@
 Name:           vokoscreen
 Version:        2.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
@@ -9,6 +9,8 @@ Url:            https://github.com/vkohaupt/vokoscreen
 Source:         %{name}-%{version}.tar.gz
 # patch to link directly against the system libs
 Patch0: %{name}-main.patch
+# patch to avoid error message for non existing *.qm files
+Patch1: %{name}-lrelease-qt4.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  alsa-lib-devel
@@ -19,6 +21,8 @@ BuildRequires:  opencv-devel
 BuildRequires:  qt4-devel
 BuildRequires:  qtsingleapplication-devel
 Requires:       alsa-utils
+Requires:       ffmpeg
+Requires:       lame
 Requires:       mkvtoolnix
 Requires:       pulseaudio-utils
 Requires:       v4l-utils-devel-tools
@@ -29,16 +33,17 @@ videos, live recordings of browser, installation, videoconferences, etc.
 
 %prep
 %setup -q
-#%patch0 -p0
+%patch0 -p0
+%patch1 -p0
 
 # remove bundled libqxt + QtSingleApplication libraries
-rm -f libqxt/*.h
-rm -f QtSingleApplication/qtsingleapplication.h
+rm -f libqxtQt4/*.h
+rm -f QtSingleApplicationQt4/qtsingleapplication.h
 
 %build
 qmake-qt4 \
       QMAKE_STRIP="" \
-      QMAKE_LRELEASE=%{_libdir}/qt4/bin/lrelease \
+      QMAKE_LRELEASE=%{_bindir}/lrelease-qt4 \
       QMAKE_CFLAGS+="%{optflags} -I%{_includedir}/QxtCore -I%{_includedir}/QxtGui -I%{_includedir}/QtSolutions -I%{_includedir}/QtNetwork" \
       QMAKE_CXXFLAGS+="%{optflags} -I%{_includedir}/QxtCore -I%{_includedir}/QxtGui -I%{_includedir}/QtSolutions -I%{_includedir}/QtNetwork" \
       QMAKE_LIBS+="%{optflags} -L%{_libdir} -lQxtCore -lQxtGui -lQtNetwork -lQtSolutions_SingleApplication-2.6"
@@ -64,6 +69,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Aug 16 2016 Martin Gansser <martinkg@fedoraproject.org> - 2.4.0-2
+- Added Requirment ffmpeg, lame, rfbz #4188
+- Added %%{name}-lrelease-qt4.patch
+
 * Mon Jul 20 2015 Martin Gansser <martinkg@fedoraproject.org> - 2.4.0-1
 - Update to 2.4.0
 
