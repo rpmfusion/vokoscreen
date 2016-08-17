@@ -1,24 +1,22 @@
 Name:           vokoscreen
-Version:        2.4.0
-Release:        3%{?dist}
+Version:        2.5.0
+Release:        1%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
 Url:            https://github.com/vkohaupt/vokoscreen
 Source:         https://github.com/vkohaupt/vokoscreen/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-# patch to link directly against the system libs
-Patch0:         %{name}-main.patch
-# patch to avoid error message for non existing *.qm files
-Patch1:         %{name}-lrelease-qt4.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  alsa-lib-devel
 BuildRequires:  ffmpeg-devel
-BuildRequires:  libqxt-devel
 BuildRequires:  libv4l-devel
+BuildRequires:  libXrandr-devel
 BuildRequires:  opencv-devel
-BuildRequires:  qt4-devel
-BuildRequires:  qtsingleapplication-devel
+BuildRequires:  qt5-linguist
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  qtsingleapplication-qt5-devel 
 Requires:       alsa-utils
 Requires:       ffmpeg
 Requires:       lame
@@ -33,14 +31,13 @@ videos, live recordings of browser, installation, videoconferences, etc.
 %prep
 %autosetup -p0
 
-# remove bundled libqxt + QtSingleApplication libraries
-rm -f libqxtQt4/*.h
-rm -f QtSingleApplicationQt4/qtsingleapplication.h
+# remove bundled QtSingleApplication libraries
+rm -rf QtSingleApplicationQt5
 
 %build
-%{qmake_qt4} \
-      QMAKE_CXXFLAGS+=" -I%{_includedir}/QxtCore -I%{_includedir}/QxtGui -I%{_includedir}/QtSolutions -I%{_includedir}/QtNetwork" \
-      QMAKE_LIBS+=" -lQtSolutions_SingleApplication-2.6"
+%{qmake_qt5} \
+      QMAKE_CXXFLAGS+=" -I%{_includedir}/qt5/QtSolutions" \
+      QMAKE_LIBS+=" -lQt5Solutions_SingleApplication-2.6"
 make %{?_smp_mflags} all
 
 
@@ -63,6 +60,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Wed Aug 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.5.0-1
+- Update to 2.5.0
+- Switch build to qt5
+- Use bundled libqtx5
+
 * Wed Aug 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.4.0-3
 - Harden build
 - Use qmake macro for build
