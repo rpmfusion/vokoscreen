@@ -1,16 +1,15 @@
 Name:           vokoscreen
 Version:        2.4.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
 Url:            https://github.com/vkohaupt/vokoscreen
-# Download:     https://github.com/vkohaupt/vokoscreen/archive/%{version}.tar.gz
-Source:         %{name}-%{version}.tar.gz
+Source:         https://github.com/vkohaupt/vokoscreen/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # patch to link directly against the system libs
-Patch0: %{name}-main.patch
+Patch0:         %{name}-main.patch
 # patch to avoid error message for non existing *.qm files
-Patch1: %{name}-lrelease-qt4.patch
+Patch1:         %{name}-lrelease-qt4.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  alsa-lib-devel
@@ -32,21 +31,16 @@ vokoscreen is an easy to use screencast creator to record educational
 videos, live recordings of browser, installation, videoconferences, etc.
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p0
+%autosetup -p0
 
 # remove bundled libqxt + QtSingleApplication libraries
 rm -f libqxtQt4/*.h
 rm -f QtSingleApplicationQt4/qtsingleapplication.h
 
 %build
-qmake-qt4 \
-      QMAKE_STRIP="" \
-      QMAKE_LRELEASE=%{_bindir}/lrelease-qt4 \
-      QMAKE_CFLAGS+="%{optflags} -I%{_includedir}/QxtCore -I%{_includedir}/QxtGui -I%{_includedir}/QtSolutions -I%{_includedir}/QtNetwork" \
-      QMAKE_CXXFLAGS+="%{optflags} -I%{_includedir}/QxtCore -I%{_includedir}/QxtGui -I%{_includedir}/QtSolutions -I%{_includedir}/QtNetwork" \
-      QMAKE_LIBS+="%{optflags} -L%{_libdir} -lQxtCore -lQxtGui -lQtNetwork -lQtSolutions_SingleApplication-2.6"
+%{qmake_qt4} \
+      QMAKE_CXXFLAGS+=" -I%{_includedir}/QxtCore -I%{_includedir}/QxtGui -I%{_includedir}/QtSolutions -I%{_includedir}/QtNetwork" \
+      QMAKE_LIBS+=" -lQtSolutions_SingleApplication-2.6"
 make %{?_smp_mflags} all
 
 
@@ -65,10 +59,15 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %doc AUTHORS COPYING CHANGE CREDITS
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_mandir}/man1/%{name}.1.gz
 %{_datadir}/pixmaps/%{name}.png
+%{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Wed Aug 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.4.0-3
+- Harden build
+- Use qmake macro for build
+- Fix source tag
+
 * Tue Aug 16 2016 Martin Gansser <martinkg@fedoraproject.org> - 2.4.0-2
 - Added Requirment ffmpeg, lame, rfbz #4188
 - Added %%{name}-lrelease-qt4.patch
