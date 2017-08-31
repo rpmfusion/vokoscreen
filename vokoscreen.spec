@@ -1,6 +1,6 @@
 Name:           vokoscreen
 Version:        2.5.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
@@ -60,6 +60,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 2.5.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 2.5.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
