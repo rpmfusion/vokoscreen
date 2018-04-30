@@ -1,11 +1,13 @@
+%global prerel beta
+
 Name:           vokoscreen
-Version:        2.5.0
-Release:        4%{?dist}
+Version:        2.5.8
+Release:        1.beta%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
 Url:            https://github.com/vkohaupt/vokoscreen
-Source:         https://github.com/vkohaupt/vokoscreen/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source:         https://github.com/vkohaupt/vokoscreen/archive/%{version}%{?prerel:-%{prerel}}/%{name}-%{version}%{?prerel:-%{prerel}}.tar.gz
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  alsa-lib-devel
@@ -16,7 +18,8 @@ BuildRequires:  opencv-devel
 BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  qtsingleapplication-qt5-devel 
+BuildRequires:  qt5-qtmultimedia-devel
+BuildRequires:  qtsingleapplication-qt5-devel
 Requires:       alsa-utils
 Requires:       ffmpeg
 Requires:       lame
@@ -29,7 +32,7 @@ vokoscreen is an easy to use screencast creator to record educational
 videos, live recordings of browser, installation, videoconferences, etc.
 
 %prep
-%autosetup -p0
+%autosetup -n %{name}-%{version}%{?prerel:-%{prerel}}
 
 # remove bundled QtSingleApplication libraries
 rm -rf QtSingleApplicationQt5
@@ -60,6 +63,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Mon Apr 30 2018 Sérgio Basto <sergio@serjux.com> - 2.5.8-1
+- Update to 2.5.8 (Beta)
+
 * Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 2.5.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
