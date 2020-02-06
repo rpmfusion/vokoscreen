@@ -1,3 +1,4 @@
+%define _legacy_common_support 1
 %global prerel beta
 
 Name:           vokoscreen
