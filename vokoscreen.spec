@@ -3,7 +3,7 @@
 
 Name:           vokoscreen
 Version:        2.5.8
-Release:        10.beta%{?dist}
+Release:        11.beta%{?dist}
 Summary:        Screencast creator
 License:        GPLv2+ and BSD
 Group:          Applications/Multimedia
@@ -64,6 +64,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.5.8-11.beta
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
+  5.1
+
 * Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.5.8-10.beta
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
